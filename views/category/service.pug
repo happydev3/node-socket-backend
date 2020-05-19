@@ -1,0 +1,187 @@
+extends ../layouts/index
+
+block content
+    .container-fluid
+        .row
+            .col.s12
+                .card
+                    .card-content
+                        a.waves-effect.waves-light.btn.modal-trigger(href='#add-contact') Add New Service
+                        #add-contact.modal
+                                                    .modal-content
+                                                        form#add_service(action='/category/service/add' method='POST' enctype="multipart/form-data")
+                                                            input(type='hidden', name='parent_id', value=parentId)
+                                                            .row
+                                                                .input-field.col.s12
+                                                                    input#name.validate(type='text' name='service_name' required='')
+                                                                    label(for='name') Service Name
+                                                            .row
+                                                                .input-field.col.s12
+                                                                    input#content.validate(type='text' name='service_content' required='')
+                                                                    label(for='content') Content
+                                                            .row
+                                                                .file-field.input-field.col.s12
+                                                                    .btn
+                                                                        span serviceImage
+                                                                        input#file.validate(type='file' name='file', required='')
+                                                                    .file-path-wrapper
+                                                                        input.file-path.validate(type='text' required='')
+                                                            .row
+                                                                .input-field.col.s12
+                                                                    input#service_cost.validate(type='text' name='service_cost' required='')
+                                                                    label(for='service_cost') Cost                                                        
+                                                            .modal-footer
+                                                                button(type='submit').btn.waves-effect.waves-light.cyan Save
+                                                                button.btn.modal-action.modal-close.waves-effect.waves-light.grey.darken-4(href='#!') Cancel
+        .row.el-element-overlay#main_content
+            if (!services) || services==null
+                .card
+                    .card-image
+                        .el-card-item
+                            .card-content
+                                h5 No service. Please add the service
+            else
+                each service in services
+                    .col.m6.l3.category_height
+                        .card
+                            .card-image
+                                .el-card-item
+                                    .el-card-avatar.el-overlay-1
+                                        img(src=service.imageUrl alt='image')
+                                        .el-overlay
+                                            ul.el-info
+                                                li
+                                                    a.btn-floating.image-popup-vertical-fit(href=service.imageUrl)
+                                                        i.material-icons search
+                                                li
+                                                    a.btn-floating.oneService(href='#')
+                                                        i.material-icons create
+                                                li
+                                                    a.btn-floating.serviceDelete(href='#')
+                                                        i.material-icons delete
+                                    .el-card-content
+                                        h5.m-b-0&attributes({'serviceId' : service.serviceId, 'parentId' : service.parentId}) #{service.serviceName}
+                                        small #{service.content}
+                                        h6.m-b-0
+                                            | #{service.cost}
+        .row.el-element-overlay#service
+            .col.s12
+                .card
+                    .card-content
+                        .row
+                            form#service_update(action='/category/service/update', method='POST', enctype="multipart/form-data" )
+                                input#parent_Id(type='hidden', name='parentId', value=parentId)
+                                input#service_id(type='hidden', name='service_id')
+                                .col.s12.m5.l4
+                                    .card.grey.lighten-4
+                                        .card-image
+                                            img#newImage(alt='image')
+                                            br
+                                            input#update_file(type='file' onchange="readUrl(this)" name='file')
+                                            span.card-title
+
+                                .col.s12.m7.l8
+                                    .card
+                                        .card-content
+                                            span.card-title
+                                                h5 Service Name
+                                                input#service_name.validate(name='service_name' type='text' required='')
+                                            h6 Content
+                                            textarea#service_content.text_area.materialize-textarea(name='service_content')
+                                            br
+                                            h6 Cost
+                                            input#service_cost.validate(name='service_cost' type='text' required='')
+                                            button(type='submit').btn.waves-effect.waves-light.cyan Update
+                                            button.btn.waves-effect.waves-light.grey.darken-4#service_cancel(type='button') Cancel
+                            #custom_preloader
+                                include ../layouts/preloader.pug
+
+block pageCss
+    link(href='/dist/css/pages/user-card.css' rel='stylesheet')
+    link(href='/assets/libs/magnific-popup/dist/magnific-popup.css' rel='stylesheet')
+
+block pageJavascript
+    script(src='/assets/libs/magnific-popup/dist/jquery.magnific-popup.min.js')
+    script(src='/assets/libs/magnific-popup/meg.init.js')
+    script.
+        $('#service_update').submit(function(){
+            if($('input[name="service_name"]').val==null || $('input[name="service_content"]').val==null || $('input[name="service_cost"]').val==null){
+                return false;                
+            } else{
+                var fi = document.getElementById('update_file');;
+                if(fi.files[0].size/1024/1024 > 1){
+                    alert('Please upload less than 1Mb');
+                    return false;
+                }
+                $('#custom_preloader').show();
+                $('#service_update').hide();                
+            }
+
+        });
+        $('#add_service').submit(function(){
+            var c_name = $('input[name="service_name"]').val;
+            var content = $('#service_content').val;
+            var cost = $('input[name="service_cost"]').val;
+            if(c_name==null || content==null || cost ==null){
+                return false;
+            } else {
+                var fi = document.getElementById('file');;
+                if(fi.files[0].size/1024/1024 > 1){
+                    alert('Please upload less than 1Mb');
+                    return false;
+                }
+                $("#add-contact").hide();
+                return true;
+            }
+        });
+        $('.oneService').click(function(){
+            $('#main_content').fadeOut();
+            $('#service').fadeIn();
+            var image_Url = $(this).parentsUntil(".el-card-item").find('img').attr('src');
+            var service_Name = $(this).parentsUntil(".card-image").find('.el-card-content').find('h5').text();
+            var service_Content = $(this).parentsUntil(".card-image").find('small').text();
+            var service_Id = $(this).parentsUntil(".card-image").find('.el-card-content').find('h5').attr('serviceId');
+            var service_cost = $(this).parentsUntil(".card-image").find('.el-card-content').find('h6').text();
+            $("#service").find('img').attr('src', image_Url);
+            $("#service").find('#service_name').val(service_Name);
+            $("#service").find('#service_content').val(service_Content);
+            $("#service").find('#service_id').val(service_Id);
+            $("#service").find('#service_cost').val(service_cost);
+        });
+        $('#service_cancel').click(function(){
+            $('#main_content').fadeIn();
+            $('#service').fadeOut();
+        });
+        function readUrl(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#newImage')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $(".serviceDelete").click(function(){
+            var currentService = $(this);
+            var service_Id = $(this).parentsUntil(".card-image").find('.el-card-content').find('h5').attr('serviceId');
+            var parentId = $(this).parentsUntil(".card-image").find('.el-card-content').find('h5').attr('parentId');
+            $.ajax({
+                url: "/category/service/delete",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    service_id : service_Id,
+                    parentId : parentId
+                },
+                success: function(result) {
+                    toastr.success('You have deleted this category successfully');
+                    currentService.parents('.col').hide();
+                },
+                error: function() {                      
+                    toastr.warning('You do not have deleted this category successfully');
+                },
+            });
+        });

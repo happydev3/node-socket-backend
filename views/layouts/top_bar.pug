@@ -1,0 +1,141 @@
+header.topbar
+    nav
+      .nav-wrapper
+        a.brand-logo(href='javascript:void(0)')
+          span.icon
+            img.light-logo(src='/assets/images/logo-light-icon.png')
+            img.dark-logo(src='/assets/images/logo-icon.png')
+          span.text
+            img.light-logo(src='/assets/images/logo-light-text.png')
+            img.dark-logo(src='/assets/images/logo-text.png')
+        ul.left
+          li.hide-on-med-and-down
+            a.nav-toggle(href='javascript: void(0);')
+              span.bars.bar1
+              span.bars.bar2
+              span.bars.bar3
+          //- li.hide-on-large-only
+          //-   a.sidebar-toggle(href='javascript: void(0);')
+          //-     span.bars.bar1
+          //-     span.bars.bar2
+          //-     span.bars.bar3
+          //- li
+          //-   a.dropdown-trigger(href='javascript: void(0);' data-target='noti_dropdown')
+          //-     i.material-icons notifications
+          //-   ul#noti_dropdown.mailbox.dropdown-content
+          //-     li
+          //-       .drop-title Notifications
+          //-     li
+          //-       .message-center
+          //-         // Message
+          //-         a(href='#')
+          //-           span.btn-floating.btn-large.red
+          //-             i.material-icons link
+          //-           span.mail-contnet
+          //-             h5 Launch Admin
+          //-             span.mail-desc Just see the my new admin!
+          //-             span.time 9:30 AM
+          //-         // Message
+          //-         a(href='#')
+          //-           span.btn-floating.btn-large.blue
+          //-             i.material-icons date_range
+          //-           span.mail-contnet
+          //-             h5 Event today
+          //-             span.mail-desc Just a reminder that you have event
+          //-             span.time 9:10 AM
+          //-         // Message
+          //-         a(href='#')
+          //-           span.btn-floating.btn-large.cyan
+          //-             i.material-icons settings
+          //-           span.mail-contnet
+          //-             h5 Settings
+          //-             span.mail-desc You can customize this template as you want
+          //-             span.time 9:08 AM
+          //-         // Message
+          //-         a(href='#')
+          //-           span.btn-floating.btn-large.green
+          //-             i.material-icons face
+          //-           span.mail-contnet
+          //-             h5 Lily Jordan
+          //-             span.mail-desc Just see the my admin!
+          //-             span.time 9:02 AM
+          //-     li
+          //-       a.center-align(href='javascript:void(0);')
+          //-         strong Check all notifications
+          //- li
+          //-   a.dropdown-trigger(href='javascript: void(0);' data-target='msg_dropdown')
+          //-     i.material-icons comment
+          //-   ul#msg_dropdown.mailbox.dropdown-content
+          //-     li
+          //-       .drop-title You have 4 new messages
+          //-     li
+          //-       .message-center
+          //-         // Message
+          //-         a(href='#')
+          //-           span.user-img
+          //-             img.circle(src='/assets/images/users/1.jpg' alt='user')
+          //-             span.profile-status.online.pull-right
+          //-           span.mail-contnet
+          //-             h5 Chris Evans
+          //-             span.mail-desc Just see the my admin!
+          //-             span.time 9:30 AM
+          //-         // Message
+          //-         a(href='#')
+          //-           span.user-img
+          //-             img.circle(src='/assets/images/users/2.jpg' alt='user')
+          //-             span.profile-status.busy.pull-right
+          //-           span.mail-contnet
+          //-             h5 Ray Hudson
+          //-             span.mail-desc I&apos;ve sung a song! See you at
+          //-             span.time 9:10 AM
+          //-         // Message
+          //-         a(href='#')
+          //-           span.user-img
+          //-             img.circle(src='/assets/images/users/3.jpg' alt='user')
+          //-             span.profile-status.away.pull-right
+          //-           span.mail-contnet
+          //-             h5 Lb James
+          //-             span.mail-desc I am a singer!
+          //-             span.time 9:08 AM
+          //-         // Message
+          //-         a(href='#')
+          //-           span.user-img
+          //-             img.circle(src='/assets/images/users/4.jpg' alt='user')
+          //-             span.profile-status.offline.pull-right
+          //-           span.mail-contnet
+          //-             h5 Don Andres
+          //-             span.mail-desc Just see the my admin!
+          //-             span.time 9:02 AM
+          //-     li
+          //-       a.center-align(href='javascript:void(0);')
+          //-         strong See all e-Mails
+          //- li.search-box
+          //-   a(href='javascript: void(0);')
+          //-     i.material-icons search
+          //-   form.app-search
+          //-     input.form-control(type='text' placeholder='Search & enter')
+          //-     a.srh-btn
+          //-       i.ti-close
+        ul.right
+          li
+            a.dropdown-trigger(href='javascript: void(0);' data-target='user_dropdown')
+              img.circle.profile-pic(src='/assets/images/users/2.jpg' alt='user')
+            ul#user_dropdown.mailbox.dropdown-content.dropdown-user
+              li
+                .dw-user-box
+                  .u-img
+                    img(src='/assets/images/users/2.jpg' alt='user')
+                  .u-text
+                    h4 #{myAccount.name}
+                    p #{myAccount.email}
+                    a.waves-effect.waves-light.btn-small.red.white-text View Profile
+              li.divider(role='separator')
+              //- li
+              //-   a(href='#')
+              //-     i.material-icons account_circle
+              //-     |  My Profile
+              li.divider(role='separator')
+              li
+                a(href='/admin/signin/logout')
+                  i.material-icons power_settings_new
+                  |  Logout

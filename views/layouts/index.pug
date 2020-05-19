@@ -1,0 +1,304 @@
+doctype html
+include ./head.pug
+
+#main-wrapper.main-wrapper
+  // ==============================================================
+  // Preloader - style you can find in spinners.css
+  // ==============================================================
+  .preloader
+    .loader
+      .loader__figure
+      p.loader__label Material Admin
+  // ==============================================================
+  // Preloader - style you can find in spinners.css
+  // ==============================================================
+  include ./top_bar.pug
+  include ./left-sidebar.pug
+  .page-wrapper
+    .page-titles
+      .d-flex.align-items-center
+        h5.font-medium.m-b-0 #{pageName} 
+    block content
+    footer.center-align.m-b-30
+      | All Rights Reserved by Joe Team. Designed and Developed by 
+      a(href='#') Ftf
+      | .
+  a.sidenav-trigger.right-side-toggle.btn-floating.btn-large.waves-effect.waves-light.red(href='#' data-target='right-slide-out')
+    i.material-icons settings
+  aside.right-sidebar
+    // Right Sidebar
+    ul#right-slide-out.sidenav.right-sidenav.p-t-10
+      li
+        .row
+          .col.s12
+            // Tabs
+            ul.tabs
+              li.tab.col.s4
+                a.active(href='#settings')
+                  span.material-icons build
+              li.tab.col.s4
+                a(href='#chat')
+                  span.material-icons chat_bubble
+              li.tab.col.s4
+                a(href='#activity')
+                  span.material-icons local_activity
+            // Tabs
+          // Setting
+          #settings.col.s12
+            .m-t-10.p-10.b-b
+              h6.font-medium Layout Settings
+              ul.m-t-15
+                li.m-b-10
+                  label
+                    input#theme-view(type='checkbox' name='theme-view')
+                    span Dark Theme
+                li.m-b-10
+                  label
+                    input#collapssidebar.nav-toggle(type='checkbox' name='collapssidebar')
+                    span Collapse Sidebar
+                li.m-b-10
+                  label
+                    input#sidebar-position(type='checkbox' name='sidebar-position')
+                    span Fixed Sidebar
+                li.m-b-10
+                  label
+                    input#header-position(type='checkbox' name='header-position')
+                    span Fixed Header
+                li.m-b-10
+                  label
+                    input#boxed-layout(type='checkbox' name='boxed-layout')
+                    span Boxed Layout
+            .p-10.b-b
+              // Logo BG
+              h6.font-medium Logo Backgrounds
+              ul.m-t-15.theme-color
+                li.theme-item
+                  a.theme-link(href='javascript:void(0)' data-logobg='skin1')
+                li.theme-item
+                  a.theme-link(href='javascript:void(0)' data-logobg='skin2')
+                li.theme-item
+                  a.theme-link(href='javascript:void(0)' data-logobg='skin3')
+                li.theme-item
+                  a.theme-link(href='javascript:void(0)' data-logobg='skin4')
+                li.theme-item
+                  a.theme-link(href='javascript:void(0)' data-logobg='skin5')
+                li.theme-item
+                  a.theme-link(href='javascript:void(0)' data-logobg='skin6')
+              // Logo BG
+            .p-10.b-b
+              // Navbar BG
+              h6.font-medium Navbar Backgrounds
+              ul.m-t-15.theme-color
+                li.theme-item
+                  a.theme-link(href='javascript:void(0)' data-navbarbg='skin1')
+                li.theme-item
+                  a.theme-link(href='javascript:void(0)' data-navbarbg='skin2')
+                li.theme-item
+                  a.theme-link(href='javascript:void(0)' data-navbarbg='skin3')
+                li.theme-item
+                  a.theme-link(href='javascript:void(0)' data-navbarbg='skin4')
+                li.theme-item
+                  a.theme-link(href='javascript:void(0)' data-navbarbg='skin5')
+                li.theme-item
+                  a.theme-link(href='javascript:void(0)' data-navbarbg='skin6')
+              // Navbar BG
+            .p-10.b-b
+              // Logo BG
+              h6.font-medium Sidebar Backgrounds
+              ul.m-t-15.theme-color
+                li.theme-item
+                  a.theme-link(href='javascript:void(0)' data-sidebarbg='skin1')
+                li.theme-item
+                  a.theme-link(href='javascript:void(0)' data-sidebarbg='skin2')
+                li.theme-item
+                  a.theme-link(href='javascript:void(0)' data-sidebarbg='skin3')
+                li.theme-item
+                  a.theme-link(href='javascript:void(0)' data-sidebarbg='skin4')
+                li.theme-item
+                  a.theme-link(href='javascript:void(0)' data-sidebarbg='skin5')
+                li.theme-item
+                  a.theme-link(href='javascript:void(0)' data-sidebarbg='skin6')
+              // Logo BG
+          // chat
+          #chat.col.s12
+            ul.mailbox.m-t-20
+              li
+                .message-center
+                  // Message
+                  a#chat_user_1.user-info(href='#' data-user-id='1')
+                    span.user-img
+                      img.circle(src='/assets/images/users/1.jpg' alt='user')
+                      span.profile-status.online.pull-right(data-status='online')
+                    span.mail-contnet
+                      h5 Chris Evans
+                      span.mail-desc Just see the my admin!
+                      span.time 9:30 AM
+                  // Message
+                  a#chat_user_2.user-info(href='#' data-user-id='2')
+                    span.user-img
+                      img.circle(src='/assets/images/users/2.jpg' alt='user')
+                      span.profile-status.busy.pull-right(data-status='busy')
+                    span.mail-contnet
+                      h5 Ray Hudson
+                      span.mail-desc I&apos;ve sung a song! See you at
+                      span.time 9:10 AM
+                  // Message
+                  a#chat_user_3.user-info(href='#' data-user-id='3')
+                    span.user-img
+                      img.circle(src='/assets/images/users/3.jpg' alt='user')
+                      span.profile-status.away.pull-right(data-status='away')
+                    span.mail-contnet
+                      h5 Lb James
+                      span.mail-desc I am a singer!
+                      span.time 9:08 AM
+                  // Message
+                  a#chat_user_4.user-info(href='#' data-user-id='4')
+                    span.user-img
+                      img.circle(src='/assets/images/users/4.jpg' alt='user')
+                      span.profile-status.offline.pull-right(data-status='offline')
+                    span.mail-contnet
+                      h5 Don Andres
+                      span.mail-desc Just see the my admin!
+                      span.time 9:02 AM
+                  // Message
+                  a#chat_user_5.user-info(href='#' data-user-id='5')
+                    span.user-img
+                      img.circle(src='/assets/images/users/1.jpg' alt='user')
+                      span.profile-status.online.pull-right(data-status='online')
+                    span.mail-contnet
+                      h5 Chris Evans
+                      span.mail-desc Just see the my admin!
+                      span.time 9:30 AM
+                  // Message
+                  a#chat_user_6.user-info(href='#' data-user-id='6')
+                    span.user-img
+                      img.circle(src='/assets/images/users/2.jpg' alt='user')
+                      span.profile-status.busy.pull-right(data-status='busy')
+                    span.mail-contnet
+                      h5 Ray Hudson
+                      span.mail-desc I&apos;ve sung a song! See you at
+                      span.time 9:10 AM
+                  // Message
+                  a#chat_user_7.user-info(href='#' data-user-id='7')
+                    span.user-img
+                      img.circle(src='/assets/images/users/3.jpg' alt='user')
+                      span.profile-status.away.pull-right(data-status='away')
+                    span.mail-contnet
+                      h5 Lb James
+                      span.mail-desc I am a singer!
+                      span.time 9:08 AM
+                  // Message
+                  a#chat_user_8.user-info(href='#' data-user-id='8')
+                    span.user-img
+                      img.circle(src='/assets/images/users/4.jpg' alt='user')
+                      span.profile-status.offline.pull-right(data-status='offline')
+                    span.mail-contnet
+                      h5 Don Andres
+                      span.mail-desc Just see the my admin!
+                      span.time 9:02 AM
+                  // Message
+                  a#chat_user_9.user-info(href='#' data-user-id='9')
+                    span.user-img
+                      img.circle(src='/assets/images/users/1.jpg' alt='user')
+                      span.profile-status.online.pull-right(data-status='online')
+                    span.mail-contnet
+                      h5 Chris Evans
+                      span.mail-desc Just see the my admin!
+                      span.time 9:30 AM
+                  // Message
+                  a#chat_user_10.user-info(href='#' data-user-id='10')
+                    span.user-img
+                      img.circle(src='/assets/images/users/2.jpg' alt='user')
+                      span.profile-status.busy.pull-right(data-status='busy')
+                    span.mail-contnet
+                      h5 Ray Hudson
+                      span.mail-desc I&apos;ve sung a song! See you at
+                      span.time 9:10 AM
+                  // Message
+                  a#chat_user_11.user-info(href='#' data-user-id='11')
+                    span.user-img
+                      img.circle(src='/assets/images/users/3.jpg' alt='user')
+                      span.profile-status.away.pull-right(data-status='away')
+                    span.mail-contnet
+                      h5 Lb James
+                      span.mail-desc I am a singer!
+                      span.time 9:08 AM
+                  // Message
+                  a#chat_user_12.user-info(href='#' data-user-id='12')
+                    span.user-img
+                      img.circle(src='/assets/images/users/4.jpg' alt='user')
+                      span.profile-status.offline.pull-right(data-status='offline')
+                    span.mail-contnet
+                      h5 Don Andres
+                      span.mail-desc Just see the my admin!
+                      span.time 9:02 AM
+          // Activity
+          #activity.col.s12
+            .m-t-10.p-10
+              h6.font-medium Activity Timeline
+              .steamline
+                .sl-item
+                  .sl-left.green
+                    i.ti-user
+                  .sl-right
+                    .font-medium
+                      | Meeting today 
+                      span.sl-date  5pm
+                    .desc you can write anything 
+                .sl-item
+                  .sl-left.blue
+                    i.fa.fa-image
+                  .sl-right
+                    .font-medium Send documents to Clark
+                    .desc Lorem Ipsum is simply 
+                .sl-item
+                  .sl-left
+                    img.circle(alt='user' src='/assets/images/users/2.jpg')
+                  .sl-right
+                    .font-medium
+                      | Go to the Doctor 
+                      span.sl-date 5 minutes ago
+                    .desc Contrary to popular belief
+                .sl-item
+                  .sl-left
+                    img.circle(alt='user' src='/assets/images/users/1.jpg')
+                  .sl-right
+                    div
+                      a(href='javascript:void(0)') Stephen
+                      span.sl-date 5 minutes ago
+                    .desc Approve meeting with tiger
+                .sl-item
+                  .sl-left.teal
+                    i.ti-user
+                  .sl-right
+                    .font-medium
+                      | Meeting today 
+                      span.sl-date  5pm
+                    .desc you can write anything 
+                .sl-item
+                  .sl-left.purple
+                    i.fa.fa-image
+                  .sl-right
+                    .font-medium Send documents to Clark
+                    .desc Lorem Ipsum is simply 
+                .sl-item
+                  .sl-left
+                    img.circle(alt='user' src='/assets/images/users/4.jpg')
+                  .sl-right
+                    .font-medium
+                      | Go to the Doctor 
+                      span.sl-date 5 minutes ago
+                    .desc Contrary to popular belief
+                .sl-item
+                  .sl-left
+                    img.circle(alt='user' src='/assets/images/users/6.jpg')
+                  .sl-right
+                    div
+                      a(href='javascript:void(0)') Stephen
+                      span.sl-date 5 minutes ago
+                    .desc Approve meeting with tiger
+  .chat-windows
+  // ==============================================================
+  // Right Sidebar
+  // ==============================================================
+include ./include-javascript.pug

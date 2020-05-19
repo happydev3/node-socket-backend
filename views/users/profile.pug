@@ -1,0 +1,204 @@
+extends ../layouts/index
+
+block content
+    .container-fluid
+        .row
+            .col.s12.m4
+                .card
+                    .card-content
+                        .center-align.m-t-30
+                            img.circle(src='../../assets/images/users/5.jpg' width='150')
+                            h4.card-title.m-t-10 Jon Doe
+                            h6.card-subtitle customer
+                            .center-align
+                            div
+                                a.m-r-40(href='javascript:void(0)')
+                                    i.icon-handbag 
+                                    font.font-medium 254
+                                a(href='javascript:void(0)')
+                                    i.icon-picture 
+                                    font.font-medium 54
+                    hr
+                    .card-content
+                        small Email address 
+                        h6 jon@doe.com
+                        small Phone
+                        h6 +91 654 784 547
+                        small Address
+                        h6 71 Pilgrim Avenue Chevy Chase, MD 20815
+                        .map-box.m-t-20
+                            iframe(src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d470029.1604841957!2d72.29955005258641!3d23.019996818380896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848aba5bd449%3A0x4fcedd11614f6516!2sAhmedabad%2C+Gujarat!5e0!3m2!1sen!2sin!4v1493204785508' width='100%' height='150' frameborder='0' style='border:0' allowfullscreen='')
+                        //- small.db.m-t-20 Social Profile
+                        //- a.btn-floating.indigo.darken-2.m-t-10(href='javascript:void(0)')
+                        //-     i.fab.fa-facebook
+                        //- a.btn-floating.blue.darken-1.m-t-10(href='javascript:void(0)')
+                        //-     i.fab.fa-twitter
+                        //- a.btn-floating.deep-orange.m-t-10(href='javascript:void(0)')
+                        //-     i.fab.fa-youtube
+            .col.s12.m8
+                .card
+                    .row
+                        .col.s12
+                            ul.tabs
+                                li.tab.col.s3
+                                    a.active(href='#timeline') Timeline
+                                li.tab.col.s3
+                                    a(href='#profile') Profile
+                                li.tab.col.s3
+                                    a(href='#settings') Settings
+                        #timeline.col.s12
+                            .card-content
+                                .profiletimeline
+                                    .sl-item
+                                        .sl-left
+                                            img.circle(src='../../assets/images/users/1.jpg' alt='user')
+                                        .sl-right
+                                            div
+                                                a(href='javascript:void(0)') John Doe
+                                                span.sl-date 5 minutes ago
+                                                p
+                                                    | assign a new task 
+                                                    a(href='javascript:void(0)')  Design weblayout
+                                                .row
+                                                    .col.l3.m6.m-b-20
+                                                        img.responsive-img.radius(src='../../assets/images/big/img1.jpg')
+                                                    .col.l3.m6.m-b-20
+                                                        img.responsive-img.radius(src='../../assets/images/big/img2.jpg')
+                                                    .col.l3.m6.m-b-20
+                                                        img.responsive-img.radius(src='../../assets/images/big/img3.jpg')
+                                                    .col.l3.m6.m-b-20
+                                                        img.responsive-img.radius(src='../../assets/images/big/img4.jpg')
+                                                    .col.l3.m6.m-b-20
+                                                        img.responsive-img.radius(src='../../assets/images/big/img4.jpg')
+                                                .like-comm
+                                                    a.m-r-10(href='javascript:void(0)') 2 comment
+                                                    a.m-r-10(href='javascript:void(0)')
+                                                        i.fa.fa-heart.text-danger
+                                                        |  5 Love
+                                    hr
+                                    .sl-item
+                                        .sl-left
+                                            img.circle(src='../../assets/images/users/2.jpg' alt='user')
+                                        .sl-right
+                                            div
+                                                a(href='javascript:void(0)') John Doe
+                                                span.sl-date 5 minutes ago
+                                                .row.m-t-30
+                                                    .col.s3
+                                                        img.responsive-img.radius(src='../../assets/images/big/img1.jpg' alt='user')
+                                                    .col.s9
+                                                        p
+                                                            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
+                                                        a.waves-effect.waves-light.btn(href='javascript:void(0)')  Design weblayout
+                                                .like-comm.m-t-20
+                                                    a.m-r-10(href='javascript:void(0)') 2 comment
+                                                    a.m-r-10(href='javascript:void(0)')
+                                                        i.fa.fa-heart.red-text
+                                                        |  5 Love
+                                    hr
+                                    .sl-item
+                                        .sl-left
+                                            img.circle(src='../../assets/images/users/3.jpg' alt='user')
+                                        .sl-right
+                                            div
+                                                a(href='javascript:void(0)') John Doe
+                                                span.sl-date 5 minutes ago
+                                                p.m-t-10
+                                                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper
+                                                .like-comm.m-t-20
+                                                a.m-r-10(href='javascript:void(0)') 2 comment
+                                                a.m-r-10(href='javascript:void(0)')
+                                                    i.fa.fa-heart.text-danger
+                                                    |  5 Love
+                                    hr
+                                    .sl-item
+                                        .sl-left
+                                            img.circle(src='../../assets/images/users/4.jpg' alt='user')
+                                        .sl-right
+                                            div
+                                                a(href='javascript:void(0)') John Doe
+                                                span.sl-date 5 minutes ago
+                                                blockquote.m-t-10
+                                                    | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+                        #profile.col.s12
+                            .card-content
+                                .row
+                                    .col.m3.b-r
+                                        strong Full Name
+                                        br
+                                        p John Doe
+                                    .col.m3.b-r
+                                        strong Mobile
+                                        br
+                                        p (123) 456 7890
+                                    .col.m3.b-r
+                                        strong Email
+                                        br
+                                        p john@admin.com
+                                    .col.m3
+                                        strong Location
+                                        br
+                                        p New York
+                                hr
+                                p.m-t-30
+                                    | Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.
+                                p
+                                    | Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries
+                                p
+                                    | It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                h5.card-title Skill Set
+                                hr
+                                h6.font-light.m-t-30
+                                    | Wordpress 
+                                    span.pull-right 80%
+                                .progress
+                                    .determinate(style='width: 70%')
+                                h6.font-light.m-t-30
+                                    | HTML 5 
+                                    span.pull-right 90%
+                                .progress
+                                    .determinate(style='width: 70%')
+                                h6.font-light.m-t-30
+                                    | jQuery 
+                                    span.pull-right 50%
+                                .progress
+                                    .determinate(style='width: 70%')
+                                h6.font-light.m-t-30
+                                    | Photoshop 
+                                    span.pull-right 70%
+                                .progress
+                                    .determinate(style='width: 70%')
+                        #settings.col.s12
+                            .card-content
+                                form
+                                    .row
+                                    .input-field.col.s12
+                                        input#name(type='text' value='Jon Doe')
+                                        label(for='name') Name
+                                    .row
+                                    .input-field.col.s12
+                                        input#email(type='email' value='jon@doe.com')
+                                        label(for='email') Email
+                                    .row
+                                    .input-field.col.s12
+                                        input#password(type='password' value='123456')
+                                        label(for='password') Password
+                                    .row
+                                    .input-field.col.s12
+                                        input#number(type='text' value='123 456 7890')
+                                        label(for='number') Phone No
+                                    .row
+                                    .input-field.col.s12
+                                        textarea#message.materialize-textarea Hi, I am Jon Doe
+                                        label(for='message') Message
+                                    .row
+                                    .input-field.col.s12
+                                        select
+                                            option(value='' disabled='') Choose Country
+                                            option(value='1') USA
+                                            option(value='2' selected='') Spain
+                                            option(value='3') India
+                                        label Select Country
+                                    .row
+                                    .input-field.col.s12
+                                        button.btn.teal.waves-effect.waves-light(type='submit' name='action') Update Profile

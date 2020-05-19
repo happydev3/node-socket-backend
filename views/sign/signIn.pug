@@ -1,0 +1,88 @@
+extends ./sign-layout
+
+block content
+    if msg && msg != null
+        h5 #{msg}
+    .auth-box.auth-sidebar
+        #loginform
+            .p-l-10
+            h5.font-medium.m-b-0.m-t-40 Sign In to Admin
+            small Just login to your account
+            // Form
+            .row
+            form.col.s12(action='/admin/sign/login'  method='POST')
+                .row
+                .input-field.col.s12
+                    input#email.validate(name='email' type='email' required='')
+                    label(for='email') Email
+                // pwd
+                .row
+                .input-field.col.s12
+                    input#password.validate(name='password' type='password' required='')
+                    label(for='password') Password
+                // pwd
+                .row.m-t-40
+                .col.s12
+                    button.btn-large.w100.blue.accent-4(type='submit') Login
+            //- .center-align.m-t-20.db
+            //-     a.btn.orange.darken-4.tooltipped(href='/sign/googleLogin' data-position='top' data-tooltip='Login with Google')
+            //-         i.fab.fa-google-plus-g
+            .center-align.m-t-20.db
+                | Don&apos;t have an account? 
+                a#to-signUp.link(href='#') Sign Up!
+        #recoverform
+            .p-l-10
+                h5.font-medium.m-b-0.m-t-40 Sign Up to Admin
+                small Just login to your account
+            // Form
+            .row
+                form.col.s12#signUp(action='/admin/sign/register' method='POST')
+                    // email
+                    .row
+                    .input-field.col.s12
+                            input#re_name.validate(name='re_name' type='text' required='')
+                            label(for='name') Name
+                    // email
+                    .row
+                    .input-field.col.s12
+                            input#re_email.validate(name='re_email' type='email' required='')
+                            label(for='email') Email
+                    // pwd
+                    .row
+                    .input-field.col.s12
+                            input#re_password.validate(name='re_password' type='password' required='')
+                            label(for='password') Password
+                    // pwd
+                    .row
+                    .input-field.col.s12
+                            input#re_cpassword.validate(type='password' required='')
+                            label(for='cpassword') Password
+                    // pwd
+                    .row.m-t-40
+                    .col.s12
+                        button.btn-large.w100.red(type='submit') Sign Up
+            .center-align.m-t-20.db
+                | Already have an account? 
+                a#to-signIn.link(href='#') Sign in!
+
+block javascript
+    script.
+        $('.tooltipped').tooltip();
+        $('#to-signUp').on("click", function() {
+            $("#loginform").slideUp();
+            $("#recoverform").fadeIn();
+        });
+        $('#to-signIn').on("click", function() {
+            $("#loginform").slideDown();
+            $("#recoverform").fadeOut();
+        });
+        $("#signUp").submit(function(){
+                var pwd = $("#re_password").val();
+                var c_pwd = $("#re_cpassword").val();
+                if(pwd==c_pwd){
+                    return true;
+                } else{
+                    alert("Please check the password");
+                    return false;
+                }
+        });

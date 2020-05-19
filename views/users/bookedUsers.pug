@@ -1,0 +1,111 @@
+extends ../layouts/index
+
+block content
+    .container-fluid
+        .row
+            .col.s12
+                .card
+                    .card-content
+                        h4.card-title User list
+                        h6.card-subtitle
+                        if users==null
+                            h5 There is no data
+                        else
+                            .table-responsive
+                                table#demo-foo-addrow.table.m-t-10.highlight.contact-list(data-page-size='10')
+                                    thead
+                                        tr
+                                            th No
+                                            th Name
+                                            th Email
+                                            th Phone
+                                            th Verified
+                                            th Joining date
+                                            th Cost
+                                            th Bookings
+                                            th Action
+                                    tbody
+                                        - var count = 1;
+                                        each user in users
+                                            tr
+                                                td #{count}
+                                                td
+                                                    .chip
+                                                        if user.photoUrl
+                                                            img(src=user.photoUrl alt='Contact Person')
+                                                        else
+                                                            img(src='/assets/images/users/5.jpg' alt='Contact Person') 
+                                                        |  #{user.name}
+                                                td  #{user.email}
+                                                td 
+                                                    if user.phoneNumber
+                                                        #{user.phoneNumber}
+                                                td
+                                                    if user.isVerified
+                                                        span.label.label-success #{user.isVerified}
+                                                    else 
+                                                        span.label.label-warning #{user.isVerified}
+                                                td #{user.createAt}
+                                                td 
+                                                    if user.cost
+                                                        #{user.cost}
+                                                    else
+                                                        span $ 0
+                                                td
+                                                    if user.bookedCount
+                                                        #{user.bookedCount}
+                                                    else 
+                                                        span 0
+                                                td
+                                                    button.btn.btn-small.delete-row-btn&attributes({'user_id' : user.userId})(type='button')
+                                                        i.ti-close(aria-hidden='true')
+                                            - count++;
+                                    tfoot
+                                        tr
+                                            td(colspan='8')
+                                            td(colspan='3')
+                                                .text-right
+                                                    ul.pagination  
+
+block pageCss
+    link(href='/assets/libs/footable/css/footable.core.css' rel='stylesheet')
+    link(href='/dist/css/pages/footable-page.css' rel='stylesheet')
+
+block pageJavascript
+    script(src='/assets/libs/footable/dist/footable.all.min.js')
+    script.
+        $(window).on('load', function() {
+
+            // Add & Remove Row
+            var addrow = $('#demo-foo-addrow');
+            addrow.footable().on('click', '.delete-row-btn', function() {
+
+                //get the footable object
+                var footable = addrow.data('footable');
+
+                //get the row we are wanting to delete
+                var row = $(this).parents('tr:first');
+
+                var userid = $(this).attr('user_id');
+                alert("I agree to delete this user.");
+
+                //delete the row
+                $.ajax({
+                    url: "/user/delete",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        userId : userid
+                    },
+                    success: function(result) {
+                        footable.removeRow(row); 
+                        //- location.reload();
+                    },
+                    error: function() {                      
+                        location.reload();
+                    },
+                });
+            });
+        });
+
+

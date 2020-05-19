@@ -1,0 +1,114 @@
+extends ../layouts/index
+
+block content
+    .container-fluid
+        .row
+            .col.s12
+                .card
+                    .card-content
+                        h4.card-title Booking list
+                        h6.card-subtitle
+                        if bookings==null
+                            h5 There is no data                            
+                        else
+                            .table-responsive
+                                table#demo-foo-addrow.table.m-t-10.highlight.contact-list(data-page-size='10')
+                                    thead
+                                        tr
+                                            th No
+                                            th Name
+                                            th Email
+                                            th Phone
+                                            th Address
+                                            th Booking Day
+                                            th Ordered Day
+                                            th Category
+                                            th Cost
+                                            th State
+                                            th Action
+                                    tbody
+                                        - var count = 1;
+                                        each booking in bookings
+                                            tr&attributes({'user_id':booking.uid,'booking_id':booking.bookingId})
+                                                td  #{count}
+                                                td  #{booking.name}
+                                                td  #{booking.email}
+                                                td  #{booking.phoneNumber}
+                                                td  #{booking.address}
+                                                td  #{booking.bookingDay}
+                                                td  #{booking.orderedDay}
+                                                td  #{booking.category}
+                                                td  #{booking.totalCost}
+                                                td
+                                                    if booking.bookingState=='0'
+                                                        button.btn.btn-small.btn-warning Pending
+                                                    else if booking.bookingState=='1'
+                                                        button.btn.btn-small.btn.blue Start
+                                                    else if booking.bookingState=='2'
+                                                        button.btn.btn-small.btn.yellow Progressing
+                                                    else 
+                                                        button.btn.btn-small.btn.green Complete                                             
+                                                td
+                                                    if booking.bookingState=='0'
+                                                        button.btn.btn-small.btn-warning
+                                                            i.material-icons play_circle_outline
+                                                    else if booking.bookingState=='1'
+                                                        button.btn.btn-small.btn.red
+                                                            i.material-icons pause_circle_outline
+                                                    else if booking.bookingState=='2'
+                                                        button.btn.btn-small.btn.red
+                                                            i.material-icons pause_circle_outline
+                                                    else 
+                                                        button.btn.btn-small.btn.green
+                                                            i.material-icons links
+                                            - count++;
+                                    tfoot
+                                        tr
+                                            td(colspan='8')
+                                            td(colspan='3')
+                                                .text-right
+                                                    ul.pagination  
+
+
+block pageCss
+    link(href='/assets/libs/footable/css/footable.core.css' rel='stylesheet')
+    link(href='/dist/css/pages/footable-page.css' rel='stylesheet')
+
+block pageJavascript
+    script(src='/assets/libs/footable/dist/footable.all.min.js')
+    script.
+        $(window).on('load', function() {
+
+            // Add & Remove Row
+            var addrow = $('#demo-foo-addrow');
+            addrow.footable().on('click', '.delete-row-btn', function() {
+
+                //get the footable object
+                var footable = addrow.data('footable');
+
+                //get the row we are wanting to delete
+                var row = $(this).parents('tr:first');
+
+                var userid = $(this).attr('user_id');
+                alert("I agree to delete this user.");
+
+                //delete the row
+                $.ajax({
+                    url: "/user/delete",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        userId : userid
+                    },
+                    success: function(result) {
+                        footable.removeRow(row); 
+                        //- location.reload();
+                    },
+                    error: function() {                      
+                        location.reload();
+                    },
+                });
+            });
+        });
+
+

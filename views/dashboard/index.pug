@@ -1,0 +1,367 @@
+extends ../layouts/index
+
+block content
+  -var bookedUsers = 0;
+  -var topUser;
+  -var currentCost = 0;
+  -var category_bookedCost = 0;
+  -var topCategory;
+  -var text_colors = 'cyan-text';
+  .container-fluid
+      // ==============================================================
+      // info box
+      // ==============================================================
+      .row
+        .col.l9
+          .card
+            .card-content
+              .d-flex.flex-wrap
+                div
+                  h4.card-title Analytics Overview
+                  h6.card-subtitle Overview of Monthly analytics
+                .ml-auto.align-self-center
+                  ul.list-inline.font-12.dl.m-r-10
+                    li.green-text
+                      i.fa.fa-circle
+                      |  Current Month
+                    li.blue-text.text-accent-4
+                      i.fa.fa-circle
+                      |  Before Month
+              .overview.ct-charts(style='height:290px!important;')
+        .col.l3
+          a(href="/booking/incoming/"+1)
+            .card.primary-gradient
+              .card-content
+                h4.card-title.white-text Booking
+                .d-flex.align-items-center
+                  div
+                    h6.font-light.m-b-0.white-text
+                        if bookings
+                          | #{bookings.length}
+                        else 
+                          | 0
+                  .ml-auto
+                    #spark8
+          a(href='/user/booked-user/' +1)
+            .card.success-gradient
+              .card-content
+                h4.card-title Booked User
+                .d-flex.align-items-center
+                  div
+                    h6.font-light.m-b-0
+                      each user in users
+                        if(user.bookedCount)
+                          - bookedUsers++;
+                          if(user.cost > currentCost)
+                            - topUser = user;
+                            -currentCost = user.cost;
+                      |   #{bookedUsers}
+                  .ml-auto
+                    #spark9
+          a(href='/user/registered/' +1)
+            .card.warning-gradient
+              .card-content
+                h4.card-title.white-text Total User
+                .d-flex.align-items-center
+                  div
+                    h6.font-light.m-b-0.white-text
+                        if users
+                          |  #{users.length}
+                        else
+                          | 0
+                  .ml-auto
+                    #spark10
+      // ==============================================================
+      // Active user - project- visitors
+      // ==============================================================
+      .row
+        .col.l4.m12
+          .card
+            .card-content
+              h4.card-title Category Cost
+              .center-align
+                #visitor.m-t-20(style='height:270px; width:100%;')
+                ul.list-inline.font-12.dl.m-t-10
+                  if(categories)
+                    -var count = 0;
+                    each category in categories
+                      if category.bookingCount
+                        -var mod_count = count%5;
+                        case mod_count
+                          when 0
+                            li.red-text
+                              i.fa.fa-circle
+                              |  #{category.categoryName}
+                          when 1
+                            li.blue-text
+                              i.fa.fa-circle
+                              |  #{category.categoryName}
+                          when 2
+                            li.yellow-text
+                              i.fa.fa-circle
+                              |  #{category.categoryName}
+                          when 3
+                            li.green-text
+                              i.fa.fa-circle
+                              |  #{category.categoryName}
+                          default
+                            li.cyan-text
+                              i.fa.fa-circle
+                              | #{category.categoryName}
+                        - count++;
+        .col.l4.s12
+          .card
+            .card-image
+              each category in categories
+                if(category.bookingCost)
+                  if(category.bookingCost > category_bookedCost)
+                    - topCategory = category
+                    - category_bookedCost = topCategory.bookedCost
+              if(topCategory && topCategory!=null)
+                img(src=topCategory.imageUrl)
+                span.card-title #{topCategory.categoryName}
+                a(href='/category/service/'+ topCategory.categoryId).btn-floating.halfway-fab.waves-effect.waves-light.green
+                  i.material-icons navigation
+          if(topCategory && topCategory!=null)
+              .card-content
+                p
+                  | Earned money: $ #{topCategory.bookingCost}
+                P 
+                  | Booked account: #{topCategory.bookingCount}
+        if (topUser && topUser!=null)
+          .col.l4.m12
+            .card
+              .card-content.center-align
+                .profile-pic.m-b-20
+                  if(topUser.photoUrl && topUser.photoUrl!=null)
+                    img.circle(src=topUser.photoUrl width='150' alt='topUser')
+                  else 
+                    img.circle(src='/assets/images/users/3.jpg' width='150' alt='topUser')                
+                  h5.m-t-15.m-b-0.font-medium #{topUser.name}
+                  a(href='#') #{topUser.email}
+                .chip Booked Accounts
+                .chip.blue.accent-4.white-text.tooltipped(data-position='top' data-delay='50' data-tooltip=topUser.bookedCount) #{topUser.bookedCount}
+              //- .p-25.b-t
+              //-   .row.center-align
+              //-     .col.s12.l6.b-r
+              //-       a.link.d-flex.align-items-center.justify-content-center.font-medium(href='#')
+              //-         i.material-icons.font-20.m-r-5 chat
+              //-         | Message
+              //-     .col.s12.l6
+              //-       a(href='/user/profile/' + topUser.userId).link.d-flex.align-items-center.justify-content-center.font-medium
+              //-         i.material-icons.font-20.m-r-5 developer_board
+              //-         | Portfolio
+
+block pageCss
+    link(href='/assets/libs/chartist/dist/chartist.min.css' rel='stylesheet')
+    link(href='/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css' rel='stylesheet')
+    // c3 CSS
+    link(href='/assets/extra-libs/c3/c3.min.css' rel='stylesheet')
+    link(href='/assets/libs/jvectormap/jquery-jvectormap.css' rel='stylesheet')
+    link(href='/dist/css/style.css' rel='stylesheet')
+    link(href='/dist/css/pages/dashboard2.css' rel='stylesheet')
+
+block pageJavascript    
+    script(src='/assets/libs/chartist/dist/chartist.min.js')
+    script(src='/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js')
+    script(src='/assets/libs/gaugeJS/dist/gauge.min.js')
+    // c3 JavaScript
+    script(src='/assets/extra-libs/c3/d3.min.js')
+    script(src='/assets/extra-libs/c3/c3.min.js')
+    script(src='/assets/extra-libs/sparkline/sparkline.js')
+
+    script.
+      $(function() {
+        "use strict";
+        var ee = !{JSON.stringify(pieChartData)};
+        var current_month = !{JSON.stringify(current_month)};
+        var before_month = !{JSON.stringify(before_month)};
+        var y_index = 5000;
+        var y_index1 = Math.max.apply(Math, current_month);
+        var y_index2 = Math.max.apply(Math, before_month);
+        if(y_index1>=y_index2){
+          y_index = y_index1;
+        } else {
+          y_index = y_index2;
+        }
+        var chart = new Chartist.Line('.overview', {
+              labels: [1, 2, 3, 4, 5, 6, 7, 8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+              series: [
+                before_month
+                , current_month
+              ]}, {
+              low: 0,
+              high: y_index,
+              showArea: true,
+              fullWidth: true,
+              plugins: [
+                Chartist.plugins.tooltip()
+              ],
+                axisY: {
+                onlyInteger: true
+                , scaleMinSpace: 40    
+                , offset: 20
+                , labelInterpolationFnc: function (value) {
+                    return (value / 1000) + 'k';
+                }
+            },
+        });
+
+            // Offset x1 a tiny amount so that the straight stroke gets a bounding box
+            // Straight lines don't get a bounding box 
+            // Last remark on -> http://www.w3.org/TR/SVG11/coords.html#ObjectBoundingBox
+        chart.on('draw', function(ctx) {  
+              if(ctx.type === 'area') {    
+                ctx.element.attr({
+                  x1: ctx.x1 + 0.001
+                });
+              }
+        });
+
+            // Create the gradient definition on created event (always after chart re-render)
+        chart.on('created', function(ctx) {
+              var defs = ctx.svg.elem('defs');
+              defs.elem('linearGradient', {
+                id: 'gradient',
+                x1: 0,
+                y1: 1,
+                x2: 0,
+                y2: 0
+              }).elem('stop', {
+                offset: 0,
+                'stop-color': 'rgba(255, 255, 255, 1)'
+              }).parent().elem('stop', {
+                offset: 1,
+                'stop-color': '#288fee'
+              });
+        });
+        
+                
+        var chart = [chart];
+
+        // ============================================================== 
+        // Our Visitor
+        // ============================================================== 
+        var sparklineLogin = function() {
+            $('#spark8').sparkline([ 4, 5, 0, 10, 9, 12, 4, 9], {
+                type: 'bar',
+                width: '100%',
+                height: '40',
+                barWidth: '4',
+                resize: true,
+                barSpacing: '5',
+                barColor: '#fff'
+            });
+            $('#spark9').sparkline([ 0, 5, 6, 10, 9, 12, 4, 9], {
+                type: 'bar',
+                width: '100%',
+                height: '40',
+                barWidth: '4',
+                resize: true,
+                barSpacing: '5',
+                barColor: '#fff'
+            });
+              $('#spark10').sparkline([ 0, 5, 6, 10, 9, 12, 4, 9], {
+                type: 'bar',
+                width: '100%',
+                height: '40',
+                barWidth: '4',
+                resize: true,
+                barSpacing: '5',
+                barColor: '#fff'
+            });
+        };
+        var sparkResize;
+
+        $(window).resize(function(e) {
+            clearTimeout(sparkResize);
+            sparkResize = setTimeout(sparklineLogin, 500);
+        });
+        sparklineLogin();
+
+        // ============================================================== 
+        // Our Visitor
+        // ============================================================== 
+        var pattern_colors = ['red', 'blue', 'yellow', 'green', 'cyan'];
+
+        var chart = c3.generate({
+            bindto: '#visitor',
+            data: {
+                columns: ee,
+                type: 'donut',
+                tooltip: {
+                    show: true
+                }
+            },
+            donut: {
+                label: {
+                    show: false
+                },
+                title: "Ratio",
+                width: 25,
+
+            },
+
+            legend: {
+                hide: true
+            },
+            color: {
+                pattern: pattern_colors
+            }
+        });
+        
+
+        // ============================================================== 
+        // Foo1 total visit
+        // ============================================================== 
+        var opts = {
+            angle: 0, // The span of the gauge arc
+            lineWidth: 0.2, // The line thickness
+            radiusScale: 0.7, // Relative radius
+            pointer: {
+                length: 0.64, // // Relative to gauge radius
+                strokeWidth: 0.04, // The thickness
+                color: '#000000' // Fill color
+            },
+            limitMax: false, // If false, the max value of the gauge will be updated if value surpass max
+            limitMin: false, // If true, the min value of the gauge will be fixed unless you set it manually
+            colorStart: '#009efb', // Colors
+            colorStop: '#009efb', // just experiment with them
+            strokeColor: '#E0E0E0', // to see which ones work best for you
+            generateGradient: true,
+            highDpiSupport: true // High resolution support
+        };
+        var target = document.getElementById('foo'); // your canvas element
+        var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
+        gauge.maxValue = 3000; // set max gauge value
+        gauge.setMinValue(0); // Prefer setter over gauge.minValue = 0
+        gauge.animationSpeed = 45; // set animation speed (32 is default value)
+        gauge.set(1850); // set actual value 
+        // ============================================================== 
+        // Foo1 total visit
+        // ============================================================== 
+        var opts = {
+            angle: 0, // The span of the gauge arc
+            lineWidth: 0.2, // The line thickness
+            radiusScale: 0.7, // Relative radius
+            pointer: {
+                length: 0.64, // // Relative to gauge radius
+                strokeWidth: 0.04, // The thickness
+                color: '#000000' // Fill color
+            },
+            limitMax: false, // If false, the max value of the gauge will be updated if value surpass max
+            limitMin: false, // If true, the min value of the gauge will be fixed unless you set it manually
+            colorStart: '#F44336', // Colors
+            colorStop: '#F44336', // just experiment with them
+            strokeColor: '#E0E0E0', // to see which ones work best for you
+            generateGradient: true,
+            highDpiSupport: true // High resolution support
+        };
+        var target = document.getElementById('foo2'); // your canvas element
+        var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
+        gauge.maxValue = 3000; // set max gauge value
+        gauge.setMinValue(0); // Prefer setter over gauge.minValue = 0
+        gauge.animationSpeed = 45; // set animation speed (32 is default value)
+        gauge.set(850); // set actual value 
+      });
+      

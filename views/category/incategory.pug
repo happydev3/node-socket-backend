@@ -1,0 +1,184 @@
+extends ../layouts/index
+
+block content
+    .container-fluid
+        .row
+            .col.s12
+                .card
+                    .card-content
+                        a.waves-effect.waves-light.btn.modal-trigger(href='#add-contact') Add New Image
+                        #add-contact.modal
+                                                    .modal-content
+                                                        form#add_image(action='/image/add' method='POST' enctype="multipart/form-data")
+                                                            input#categoryId(type='hidden' name='categoryId' value=category.categoryId)
+                                                            .row
+                                                                .input-field.col.s12
+                                                                    input#content.validate(type='text' name='imgContent' required='')
+                                                                    label(for='imgContent') Content
+                                                            .row
+                                                                .file-field.input-field.col.s12
+                                                                    .btn
+                                                                        span File
+                                                                        input#file.validate(type='file' name='file', required='')
+                                                                    .file-path-wrapper
+                                                                        input.file-path.validate(type='text' required='')                                                            
+                                                            .modal-footer
+                                                                button(type='submit').btn.waves-effect.waves-light.cyan Save
+                                                                button.btn.modal-action.modal-close.waves-effect.waves-light.grey.darken-4(href='#!') Cancel
+        .row
+            if (!imagelists) || imagelists==null
+            else
+                .col.s12
+                    .card
+                        .card-content
+                            h5.card-title #{category.categoryName}
+                            p #{ category.content }
+                            .carousel
+                                each imagelist in imagelists
+                                    a.carousel-item
+                                        img(src=imagelist.imgUrl alt='image')
+        .row.el-element-overlay#main_content
+            if (!imagelists) || imagelists==null
+                .card
+                    .card-image
+                        .el-card-item
+                            .card-content
+                                h5 No image. Please add the image
+            else
+                each imagelist in imagelists
+                    .col.m6.l3.category_height
+                        .card
+                            .card-image
+                                .el-card-item
+                                    .el-card-avatar.el-overlay-1
+                                        img(src=imagelist.imgUrl alt='image')
+                                        .el-overlay
+                                            ul.el-info
+                                                li
+                                                    a.btn-floating.image-popup-vertical-fit(href=imagelist.imgUrl)
+                                                        i.material-icons search
+                                                li
+                                                    a.btn-floating(href='/category/')
+                                                        i.material-icons link
+                                                li
+                                                    a.btn-floating.oneCategory(href='#')
+                                                        i.material-icons create
+                                                li
+                                                    a.btn-floating.imageDelete(href='#')
+                                                        i.material-icons delete
+                                    .el-card-content
+                                        h5.m-b-0&attributes({'imgId' : imagelist.imgId})
+                                        small #{imagelist.imgContent}
+        .row.el-element-overlay#category
+            .col.s12
+                .card
+                    .card-content
+                        .row
+                            form#image_update(action='/image/update', method='POST', enctype="multipart/form-data" )
+                                input#imgId(type='hidden', name='imgId')
+                                input#categoryId(type='hidden', name='categoryId' value=category.categoryId)
+                                .col.s12.m5.l4
+                                    .card.grey.lighten-4
+                                        .card-image
+                                            img#newImage(alt='image')
+                                            br
+                                            input#update_file(type='file' onchange="readUrl(this)" name='file')
+                                            span.card-title
+
+                                .col.s12.m7.l8
+                                    .card
+                                        .card-content
+                                            h6 content
+                                            textarea#imgContent.text_area.materialize-textarea(name='imgContent')
+                                            br
+                                            button(type='submit').btn.waves-effect.waves-light.cyan Update
+                                            button.btn.waves-effect.waves-light.grey.darken-4#category_cancel(type='button') Cancel
+                            #custom_preloader
+                                include ../layouts/preloader.pug
+
+block pageCss
+    link(href='/dist/css/pages/user-card.css' rel='stylesheet')
+    link(href='/assets/libs/magnific-popup/dist/magnific-popup.css' rel='stylesheet')
+
+block pageJavascript
+    script(src='/assets/libs/magnific-popup/dist/jquery.magnific-popup.min.js')
+    script(src='/assets/libs/magnific-popup/meg.init.js')
+    script.
+        $(document).ready(function(){
+            $('.carousel').carousel();
+        });
+        $('#image_update').submit(function(){
+            if($('input[name="content"]').val==null){
+                return false;                
+            } else{
+                var fi = document.getElementById('update_file');;
+                if(fi.files[0].size/1024/1024 > 1){
+                    alert('Please upload less than 1Mb');
+                    return false;
+                }
+                $('#custom_preloader').show();
+                $('#image_update').hide();         
+                return true;       
+            }
+
+        });
+        $('#add_image').submit(function(){
+            var content = $('input[name="imgContent"]').val;
+            if(content==null){
+                return false;
+            } else {
+                var fi = document.getElementById('file');;
+                if(fi.files[0].size/1024/1024 > 1){
+                    alert('Please upload less than 1Mb');
+                    return false;
+                }
+                $("#add-contact").hide();
+                return true;
+            }
+        });
+        $('.oneCategory').click(function(){
+            $('#main_content').fadeOut();
+            $('#category').fadeIn();
+            var image_Url = $(this).parentsUntil(".el-card-item").find('img').attr('src');
+            var imgContent = $(this).parentsUntil(".card-image").find('small').text();
+            var imgId = $(this).parentsUntil(".card-image").find('.el-card-content').find('h5').attr('imgId');
+            $("#category").find('img').attr('src', image_Url);
+            $("#category").find('#imgContent').val(imgContent);
+            $("#category").find('#imgId').val(imgId);
+        });
+        $('#category_cancel').click(function(){
+            $('#main_content').fadeIn();
+            $('#category').fadeOut();
+        });
+        function readUrl(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#newImage')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $(".imageDelete").click(function(){
+            var currentCategory = $(this);
+            var imgId = $(this).parentsUntil(".card-image").find('.el-card-content').find('h5').attr('imgId');
+            var categoryId = #{ category.categoryId };
+            $.ajax({
+                url: "/image/delete",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    categoryId : categoryId,
+                    imgId : imgId
+                },
+                success: function(result) {
+                    toastr.success('You have deleted this category successfully');
+                    currentCategory.parents('.col').hide();
+                },
+                error: function() {                      
+                    toastr.warning('You do not have deleted this category. Please again delete');
+                },
+            });
+        });

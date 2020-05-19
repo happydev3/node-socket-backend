@@ -1,0 +1,55 @@
+doctype html
+head
+  meta(charset='utf-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  link(rel='icon' type='image/png' sizes='16x16' href='../../assets/images/favicon.png')
+  title Wifball Admin
+  link(href='../../dist/css/style.css' rel='stylesheet')
+  // This page CSS
+  link(href='../../dist/css/pages/authentication.css' rel='stylesheet')
+ 
+.main-wrapper
+  // ==============================================================
+  // Preloader - style you can find in spinners.css
+  // ==============================================================
+  .preloader
+    .loader
+      .loader__figure
+      p.loader__label Wifball Admin
+  // ==============================================================
+  // Preloader - style you can find in spinners.css
+  // ==============================================================
+  // ==============================================================
+  // Login box.scss
+  // ==============================================================
+  //- .auth-wrapper.d-flex.no-block.justify-content-center.align-items-center(style='background:url(/assets/images/big/auth-bg2.jpg) no-repeat left center;')
+  .auth-wrapper.d-flex.no-block.justify-content-center.align-items-center
+    .container
+      .row
+        .col.s12.l8.m6.demo-text
+          //- span.db
+          //-   img(src='/assets/images/logo-icon.png' alt='logo')
+          //- span.db
+          //-   img(src='/assets/images/logo-text.png' alt='logo')
+          h1.font-light.m-t-40
+            //- | Welcome to the 
+            span.font-medium.black-text  Admin
+          //- p
+          //-   | This is just a demo text which you can change as per your requeirment, so change once you get chance. this is default text.
+          //- a.btn.btn-round.red.m-t-5 Know more
+      block content
+// ==============================================================
+// All Required js
+// ==============================================================
+script(src='/assets/libs/jquery/dist/jquery.min.js')
+script(src='/dist/js/materialize.min.js')
+// ==============================================================
+// This page plugin js
+// ==============================================================
+script(type='text/javascript').
+  $(function() {
+    $(".preloader").fadeOut();
+  });
+
+block javascript
