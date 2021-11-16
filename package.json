@@ -9,7 +9,7 @@
     "dependencies": {
         "amazon-ses-mailer": "^0.2.0",
         "array-flatten": "^3.0.0",
-        "aws-sdk": "^2.679.0",
+        "aws-sdk": "^2.814.0",
         "bcrypt": "^3.0.6",
         "body-parser": "^1.19.0",
         "content-disposition": "^0.5.3",
